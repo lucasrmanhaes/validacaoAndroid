@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <resources>
+        <string name="app_name">Login</string>
+        <string name="login">Entrar</string>
+        <string name="subtitle">Por favor, forneça suas informações</string>
+        <string name="email">Entre com seu e-mail</string>
+        <string name="password">Entre com sua senha</string>
+        <string name="enter">Entrar</string>
+    </resources>
+
