@@ -29,16 +29,13 @@ import com.lucas.login.R
 @Composable
 fun Login() {
 
-    var email by remember {
-        mutableStateOf("")
-    }
-
-    var password by remember {
-        mutableStateOf("")
-    }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var erroEmail by remember{ mutableStateOf(false) }
+    var mensagemEmail by remember { mutableStateOf("") }
+    val tamanhoMaximo = 8
 
     Column(modifier = Modifier.padding(16.dp)) {
-
         Text(
             text = stringResource(id = R.string.login),
             fontSize = 32.sp,
@@ -47,26 +44,37 @@ fun Login() {
         )
         Text(text = stringResource(id = R.string.subtitle))
         Spacer(modifier = Modifier.height(48.dp))
-        Card(modifier = Modifier
-            .fillMaxWidth()) {
-            Column(modifier = Modifier
+        Card(
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(32.dp)) {
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(32.dp)
+            ) {
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
+                    isError = erroEmail,
                     modifier = Modifier.fillMaxWidth(),
                     label = {
                         Text(text = stringResource(id = R.string.email))
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email
-                    ),
+                    )
                 )
+                Text(text = "E-mail é obrigatório", textAlign = TextAlign.End, modifier = Modifier.fillMaxWidth())
                 Spacer(modifier = Modifier.height(16.dp))
                 OutlinedTextField(
                     value = password,
-                    onValueChange = { password = it },
+                    onValueChange = {
+                        if(it.length <= tamanhoMaximo){
+                            password = it
+                        }
+
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
                         Text(text = stringResource(id = R.string.password))
@@ -77,7 +85,16 @@ fun Login() {
                     visualTransformation = PasswordVisualTransformation()
                 )
                 Spacer(modifier = Modifier.height(32.dp))
-                Button(onClick = {  }) {
+
+                Button(onClick = {
+                    if(email.isEmpty()){
+                        erroEmail = true
+                    }else{
+                        erroEmail = false
+                    }
+                })
+
+                {
                     Text(
                         text = stringResource(id = R.string.enter),
                         modifier = Modifier
